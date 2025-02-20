@@ -18,7 +18,7 @@ public class ThirdExample {
             var purchases = generate(() -> buyCoffee(cc)).limit(n).toList();
             var coffees = purchases.stream().map(Tuple2::_1).toList();
             var charges = purchases.stream().map(Tuple2::_2).toList();
-            var combinedCharge = charges.stream().reduce(Charge::combine).orElseThrow(() -> new RuntimeException("Error combining charges"));
+            var combinedCharge = charges.stream().reduce(Charge::combine).orElseThrow(RuntimeException::new);
             return new Tuple2<>(coffees, combinedCharge);
         }
     }
@@ -46,9 +46,9 @@ public class ThirdExample {
                 .collect(groupingBy(Charge::cc))
                 .values()
                 .stream()
-                .map(list -> list.stream()
+                .flatMap(list -> list.stream()
                         .reduce(Charge::combine)
-                        .orElseThrow(() -> new RuntimeException("Error combining charges")))
+                        .stream())
                 .toList();
     }
 }
