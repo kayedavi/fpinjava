@@ -1,6 +1,6 @@
 package com.github.kayedavi.fpinjava.introduction;
 
-import com.github.kayedavi.fpinjava.introduction.utils.Tuple2;
+import com.github.kayedavi.fpinjava.utils.Tuple2;
 
 import java.util.List;
 
