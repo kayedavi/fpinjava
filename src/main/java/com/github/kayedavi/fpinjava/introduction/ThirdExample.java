@@ -2,10 +2,10 @@ package com.github.kayedavi.fpinjava.introduction;
 
 import com.github.kayedavi.fpinjava.introduction.utils.Tuple2;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static java.util.stream.Collectors.groupingBy;
+import static java.util.stream.Stream.generate;
 
 public class ThirdExample {
     public static class Cafe {
@@ -15,9 +15,7 @@ public class ThirdExample {
         }
 
         public Tuple2<List<Coffee>, Charge> buyCoffees(CreditCard cc, int n) {
-            var purchases = new ArrayList<Tuple2<Coffee, Charge>>();
-            for (var i = 0; i < n; i++)
-                purchases.add(buyCoffee(cc));
+            var purchases = generate(() -> buyCoffee(cc)).limit(n).toList();
             var coffees = purchases.stream().map(Tuple2::_1).toList();
             var charges = purchases.stream().map(Tuple2::_2).toList();
             var combinedCharge = charges.stream().reduce(Charge::combine).orElseThrow(() -> new RuntimeException("Error combining charges"));
