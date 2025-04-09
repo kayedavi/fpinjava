@@ -1,11 +1,11 @@
 package com.github.kayedavi.fpinjava.gettingstarted;
 
-import com.github.kayedavi.fpinjava.utils.Return;
-import com.github.kayedavi.fpinjava.utils.Suspend;
 import com.github.kayedavi.fpinjava.utils.TailCall;
 
 import java.util.function.IntUnaryOperator;
 
+import static com.github.kayedavi.fpinjava.utils.TailCall.ret;
+import static com.github.kayedavi.fpinjava.utils.TailCall.sus;
 import static java.io.IO.println;
 
 public class MyProgram {
@@ -29,8 +29,8 @@ public class MyProgram {
     }
 
     private static TailCall<Integer> factorial(int n, int acc) {
-        if (n <= 0) return new Return<>(acc);
-        else return new Suspend<>(() -> factorial(n - 1, acc));
+        if (n <= 0) return ret(acc);
+        else return sus(() -> factorial(n - 1, acc));
     }
 
     //  Another implementation of `factorial`, this time with a `while` loop
@@ -54,8 +54,8 @@ public class MyProgram {
     }
 
     private TailCall<Integer> fib(int n, int current, int next) {
-        if (n <= 0) return new Return<>(current);
-        else return new Suspend<>(() -> fib(n - 1, next, current + next));
+        if (n <= 0) return ret(current);
+        else return sus(() -> fib(n - 1, next, current + next));
     }
 
     //  This definition and `formatAbs` are very similar..
